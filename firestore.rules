@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: workspaces
+    // Document ID: workspaceId
+    // Fields:
+    //   - name: string
+    //   - owner_id: string
+    //   - subscription_plan: string
+    //   - org_type: string
+    //
+    // Collection: users
+    // Document ID: userId
+    // Fields:
+    //   - name: string
+    //   - email: string
+    //   - role: string
+    //   - workspace_id: string
+    //
+    // Collection: tasks
+    // Document ID: taskId
+    // Fields:
+    //   - title: string
+    //   - workspace_id: string
+    //   - status: string
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+       return request.auth != null;
+    }
+
+    function isOwner(userId) {
+       return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasRequiredFields(fields) {
+       return request.resource.data.keys().hasAll(fields);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /workspaces/{workspaceId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && hasRequiredFields(['name', 'owner_id']);
+      allow update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && hasRequiredFields(['name', 'email', 'role']);
+      allow update: if isAuthenticated();
+      allow delete: if false;
+    }
+
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && hasRequiredFields(['title', 'workspace_id']);
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
+
+    match /system/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

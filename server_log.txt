@@ -1,0 +1,19 @@
+
+/app/applet/node_modules/better-sqlite3/lib/methods/pragma.js:10
+	const stmt = this[cppdb].prepare(`PRAGMA ${source}`, this, true);
+	                         ^
+SqliteError: database disk image is malformed
+    at Database.pragma (/app/applet/node_modules/better-sqlite3/lib/methods/pragma.js:10:27)
+    at <anonymous> (/app/applet/server/db.ts:6:4)
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  code: 'SQLITE_CORRUPT'
+}
+
+Node.js v22.22.2
+npm notice
+npm notice New major version of npm available! 10.9.7 -> 11.12.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+npm notice To update run: npm install -g npm@11.12.1
+npm notice

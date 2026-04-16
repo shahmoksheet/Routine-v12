@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Workspace": {
+      "title": "Workspace",
+      "description": "A workspace for a business or team",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "owner_id": { "type": "string" },
+        "subscription_plan": { "type": "string" },
+        "subscription_status": { "type": "string" },
+        "org_type": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "owner_id"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A user in the system",
+      "type": "object",
+      "properties": {
+        "workspace_id": { "type": "string" },
+        "department_id": { "type": "string" },
+        "role_id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "role": { "type": "string" },
+        "language": { "type": "string" },
+        "theme_color": { "type": "string" },
+        "is_dark_mode": { "type": "boolean" },
+        "manager_id": { "type": "string" },
+        "kanban_columns": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "role"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A task in a project",
+      "type": "object",
+      "properties": {
+        "workspace_id": { "type": "string" },
+        "project_id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string" },
+        "created_by": { "type": "string" },
+        "assigned_to_type": { "type": "string" },
+        "assigned_to_id": { "type": "string" },
+        "priority": { "type": "string" },
+        "status": { "type": "string" },
+        "due_date": { "type": "string" },
+        "due_time": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["workspace_id", "title"]
+    }
+  },
+  "firestore": {
+    "/workspaces/{workspaceId}": {
+      "schema": { "$ref": "#/entities/Workspace" },
+      "description": "Workspaces"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Users"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Tasks"
+    }
+  }
+}

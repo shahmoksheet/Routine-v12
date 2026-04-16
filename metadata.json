@@ -1,0 +1,9 @@
+{
+  "name": "Routine V12",
+  "description": "A professional-grade task management application with real-time collaboration, project tracking, and personalized themes.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
