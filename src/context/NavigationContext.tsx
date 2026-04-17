@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export type View = 'dashboard' | 'tasks' | 'calendar' | 'projects' | 'settings' | 'activity' | 'team' | 'departments' | 'approvals' | 'edit-profile' | 'notifications' | 'workspace-switch' | 'workspace-settings' | 'vasy-integration' | 'terms' | 'privacy' | 'support' | 'chat' | 'chatbot' | 'subscription' | 'audit-logs' | 'reports' | 'roles' | 'ownership-transfer' | 'export-data' | 'kanban-customization';
+export type View = 'dashboard' | 'tasks' | 'calendar' | 'projects' | 'settings' | 'activity' | 'team' | 'departments' | 'approvals' | 'edit-profile' | 'notifications' | 'workspace-switch' | 'workspace-settings' | 'terms' | 'privacy' | 'support' | 'chat' | 'chatbot' | 'subscription' | 'audit-logs' | 'reports' | 'roles' | 'ownership-transfer' | 'export-data' | 'kanban-customization';
 
 interface NavigationContextType {
   currentView: View;
@@ -32,7 +32,6 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       'notifications': '/notifications',
       'workspace-switch': '/workspace-switch',
       'workspace-settings': '/workspace-settings',
-      'vasy-integration': '/vasy-integration',
       'terms': '/terms-privacy',
       'privacy': '/terms-privacy',
       'support': '/support',

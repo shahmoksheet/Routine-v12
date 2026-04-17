@@ -68,8 +68,6 @@ export default function SettingsView() {
       setCurrentView('workspace-settings');
     } else if (action === 'Members') {
       setCurrentView('team');
-    } else if (action === 'VasyIntegration') {
-      setCurrentView('vasy-integration');
     } else if (action === 'TermsAndPrivacy') {
       setCurrentView('terms');
     } else if (action === 'Support') {
@@ -324,7 +322,6 @@ export default function SettingsView() {
             </div>
           </div>
 
-          <SettingsItem icon={Database} label="VasyERP Integration" onClick={() => handleAction('VasyIntegration')} />
           <SettingsItem icon={Bell} label="Notifications Settings" onClick={() => handleAction('Notifications')} />
           <div className="flex items-center gap-4 px-5 py-4 bg-white border-b border-slate-50 cursor-pointer hover:bg-slate-50 transition-colors group last:border-0" onClick={() => handleAction('Sync')}>
             <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">

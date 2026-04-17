@@ -25,7 +25,7 @@ export const PLAN_LIMITS: Record<SubscriptionPlan, PlanLimits> = {
     usersPerWorkspace: 50,
     departments: 10,
     storageGB: 50,
-    features: ['Advanced Tasks', 'Approvals', 'Reporting', 'Vasy Integration'],
+    features: ['Advanced Tasks', 'Approvals', 'Reporting'],
   },
   Enterprise: {
     workspaces: -1, // Unlimited

@@ -37,6 +37,9 @@ export default function TeamView() {
   const [inviteRole, setInviteRole] = useState('Employee');
   const [inviteName, setInviteName] = useState('');
   const [inviteMode, setInviteMode] = useState<'link' | 'direct'>('link');
+  const [sendViaEmail, setSendViaEmail] = useState(true);
+  const [sendViaSms, setSendViaSms] = useState(false);
+  const [sendViaWhatsapp, setSendViaWhatsapp] = useState(false);
   const [generatedInvite, setGeneratedInvite] = useState<Invitation | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -51,6 +54,17 @@ export default function TeamView() {
       toast.error('Please provide either an email address or a phone number.');
       return;
     }
+    
+    if (sendViaEmail && !inviteEmail) {
+      toast.error('Please provide an email address to send via Email.');
+      return;
+    }
+    
+    if ((sendViaSms || sendViaWhatsapp) && !invitePhone) {
+      toast.error('Please provide a phone number to send via SMS or WhatsApp.');
+      return;
+    }
+
     const selectedRole = roles.find(r => r.name === inviteRole);
     try {
       if (inviteMode === 'link') {
@@ -62,6 +76,15 @@ export default function TeamView() {
           workspaceId: activeWorkspace.id 
         });
         setGeneratedInvite(inv);
+        
+        const sentVia = [];
+        if (sendViaEmail && inviteEmail) sentVia.push('Email');
+        if (sendViaSms && invitePhone) sentVia.push('SMS');
+        if (sendViaWhatsapp && invitePhone) sentVia.push('WhatsApp');
+        
+        if (sentVia.length > 0) {
+          toast.success(`Invitation sent via ${sentVia.join(', ')}`);
+        }
       } else {
         await addUser({
           email: inviteEmail,
@@ -71,6 +94,16 @@ export default function TeamView() {
           role_id: selectedRole?.id,
           workspace_id: activeWorkspace.id
         });
+        
+        const sentVia = [];
+        if (sendViaEmail && inviteEmail) sentVia.push('Email');
+        if (sendViaSms && invitePhone) sentVia.push('SMS');
+        if (sendViaWhatsapp && invitePhone) sentVia.push('WhatsApp');
+        
+        if (sentVia.length > 0) {
+          toast.success(`Welcome message sent via ${sentVia.join(', ')}`);
+        }
+        
         closeInviteModal();
       }
     } catch (err: any) {
@@ -171,6 +204,9 @@ export default function TeamView() {
     setInviteName('');
     setInviteRole('Employee');
     setInviteMode('link');
+    setSendViaEmail(true);
+    setSendViaSms(false);
+    setSendViaWhatsapp(false);
   };
 
   if (isLoading) {
@@ -499,6 +535,33 @@ export default function TeamView() {
                         <option key={role.id} value={role.name}>{role.name}</option>
                       ))}
                     </select>
+                  </div>
+                  
+                  <div className="space-y-3 pt-2">
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest pl-1">Send Invitation Via</label>
+                    <div className="flex flex-col gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className="relative flex items-center justify-center">
+                          <input type="checkbox" checked={sendViaEmail} onChange={e => setSendViaEmail(e.target.checked)} className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded-md checked:bg-primary-500 checked:border-primary-500 transition-all cursor-pointer" />
+                          <CheckCircle2 className="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                        </div>
+                        <span className="text-sm font-bold text-slate-700 group-hover:text-primary-600 transition-colors">Email</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className="relative flex items-center justify-center">
+                          <input type="checkbox" checked={sendViaSms} onChange={e => setSendViaSms(e.target.checked)} className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded-md checked:bg-primary-500 checked:border-primary-500 transition-all cursor-pointer" />
+                          <CheckCircle2 className="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                        </div>
+                        <span className="text-sm font-bold text-slate-700 group-hover:text-primary-600 transition-colors">SMS</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className="relative flex items-center justify-center">
+                          <input type="checkbox" checked={sendViaWhatsapp} onChange={e => setSendViaWhatsapp(e.target.checked)} className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded-md checked:bg-primary-500 checked:border-primary-500 transition-all cursor-pointer" />
+                          <CheckCircle2 className="w-3 h-3 text-white absolute opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                        </div>
+                        <span className="text-sm font-bold text-slate-700 group-hover:text-primary-600 transition-colors">WhatsApp</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
 

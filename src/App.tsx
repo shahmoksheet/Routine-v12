@@ -16,7 +16,6 @@ import EditProfileView from './views/EditProfileView';
 import NotificationsView from './views/NotificationsView';
 import WorkspaceSwitchView from './views/WorkspaceSwitchView';
 import WorkspaceSettingsView from './views/WorkspaceSettingsView';
-import VasyIntegrationView from './views/VasyIntegrationView';
 import TermsAndPrivacyView from './views/TermsAndPrivacyView';
 import SupportView from './views/SupportView';
 import ChatView from './views/ChatView';
@@ -219,7 +218,6 @@ function AppContent() {
         <Route path="/notifications" element={<NotificationsView />} />
         <Route path="/workspace-switch" element={<WorkspaceSwitchView />} />
         <Route path="/workspace-settings" element={<WorkspaceSettingsView />} />
-        <Route path="/vasy-integration" element={<VasyIntegrationView />} />
         <Route path="/terms-privacy" element={<TermsAndPrivacyView />} />
         <Route path="/support" element={<SupportView />} />
         <Route path="/chat" element={<ChatView />} />
